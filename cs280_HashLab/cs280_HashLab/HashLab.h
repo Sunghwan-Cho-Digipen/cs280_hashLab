@@ -17,6 +17,9 @@ Creation date: 1/26/2021
 void ShowCharCount(std::string text);
 
 constexpr int SudokuBoardSize = 9;
+constexpr int NumOfNotValid = 0;
+constexpr int NumOfValid = 1;
+constexpr int NumOfNotCompleted = 2;
 // Test if all the rows are valid
 // Test if all the columns are valid
 // Test if all the 3x3s are valid
