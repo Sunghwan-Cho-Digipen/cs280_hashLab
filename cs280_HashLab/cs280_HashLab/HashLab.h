@@ -16,17 +16,17 @@ Creation date: 1/26/2021
 // output should be written.  Write the char then ": " then the count
 void ShowCharCount(std::string text);
 
-constexpr int SudokuBoardSize = 9;
-constexpr int NumOfNotValid = 0;
-constexpr int NumOfValid = 1;
-constexpr int NumOfNotCompleted = 2;
+static constexpr int SUDOKU_BOARD_SIZE = 9;
+static constexpr int NUM_OF_NOT_VALID = 0;
+static constexpr int NUM_OF_VALID = 1;
+static constexpr int NUM_OF_NOT_COMPLETED = 2;
 // Test if all the rows are valid
 // Test if all the columns are valid
 // Test if all the 3x3s are valid
 // Output the errors (Test6), if no errors output 
 //    if complete: "Puzzle solved correctly" (Test4) or 
 //       incomplete: "Puzzle doesn't have any errors at the moment" (Test5)
-void TestSudoku(char board[SudokuBoardSize][SudokuBoardSize]);
+void TestSudoku(char board[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE]);
 
 // Prove the Birthday paradox by running it 10000 times
 // use std::mt19937 and MAKE SURE use 0 as the seed or you won't match my results

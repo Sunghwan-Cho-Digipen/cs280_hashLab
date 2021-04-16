@@ -41,7 +41,7 @@ Dongji seotdaredo kkotman pinda.";
 
 void Test4() {
 	std::cout << "============ Complete Sodoku ===============" << std::endl;
-	char sudoku[SudokuBoardSize][SudokuBoardSize] = { { 3, 5, 1,   9, 2, 4,   7, 6, 8},
+	char sudoku[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE] = { { 3, 5, 1,   9, 2, 4,   7, 6, 8},
 													  { 2, 8, 4,   6, 1, 7,   9, 3, 5},
 													  { 9, 7, 6,   5, 3, 8,   4, 2, 1},
 
@@ -57,7 +57,7 @@ void Test4() {
 
 void Test5() {
 	std::cout << "============ Incomplete Sodoku ===============" << std::endl;
-	char sudoku[SudokuBoardSize][SudokuBoardSize] = { { -1,  5, -1,    9,  2, -1,    7, -1,  8},
+	char sudoku[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE] = { { -1,  5, -1,    9,  2, -1,    7, -1,  8},
 													  {  2,  8, -1,   -1,  1, -1,   -1, -1, -1},
 													  {  9,  7, -1,   -1,  3,  8,   -1,  2,  1},
 
@@ -74,7 +74,7 @@ void Test5() {
 
 void Test6() {
 	std::cout << "============ Sodoku with Errors ===============" << std::endl;
-	char sudoku[SudokuBoardSize][SudokuBoardSize] = { { 4, 5, 1,   9, 2, 4,   7, 6, 8},
+	char sudoku[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE] = { { 4, 5, 1,   9, 2, 4,   7, 6, 8},
 													  { 2, 3, 4,   6, 1, 7,   9, 3, 5},
 													  { 9, 7, 6,   5, 3, 8,   4, 2, -1},
 

@@ -10,7 +10,6 @@ Creation date: 04/14/2021
 ******************************************************************/
 
 #include <iostream>
-#include <vector>
 #include "HashLab.h"
 
 int charCountHashFunction(char pChar)
@@ -40,22 +39,58 @@ void ShowCharCount(std::string text)
 	}
 }
 
-int checkArrayValid(char singleArray[SudokuBoardSize])
+int checkArrayValid(const char* singleArray, [[maybe_unused]]int row, [[maybe_unused]]int column, bool is3X3Called)
 {
-	//todo
-	return 0;
+	bool existHashArray[SUDOKU_BOARD_SIZE] = { false, };
+
+	int returnValue = NUM_OF_VALID;
+	
+	for(int i = SUDOKU_BOARD_SIZE - 1; i >= 0; --i)
+	{
+		int index = static_cast<int>(singleArray[i]) - 1;
+		if (index >= 0 && index < SUDOKU_BOARD_SIZE)
+		{
+			if (existHashArray[index] == true)
+			{
+				if (is3X3Called == true)
+				{
+					std::cout << "Error in 3x3 starting at index: ( " << row << ", " << column << ")" << std::endl;
+				}
+				returnValue = NUM_OF_NOT_VALID;
+			}
+			existHashArray[index] = true;
+		}
+	}
+
+	if(returnValue == NUM_OF_NOT_VALID)
+	{
+		return returnValue;
+	}
+	
+	for(int i = 0; i < SUDOKU_BOARD_SIZE; ++i)
+	{
+		if(existHashArray[i] == false)
+		{
+			return NUM_OF_NOT_COMPLETED;
+		}
+	}
+	
+	return NUM_OF_VALID;
 }
 
-void TestSudoku(char board[SudokuBoardSize][SudokuBoardSize])
+
+void TestSudoku(char board[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE])
 {
-	char singleArrayInSudoku[SudokuBoardSize] = { -1, };
-	int arrayCheckResult[SudokuBoardSize * 3] = { 0, };
+	char singleArrayInSudoku[SUDOKU_BOARD_SIZE] = { -1, };
+	int arrayCheckResult[SUDOKU_BOARD_SIZE * 3] = { 0, };
+	const int UN_USING_VALUE = 0;
 	int index = 0;
+	
 	//row check
-	for(int row = 0; row < SudokuBoardSize; ++row, ++index)
+	for(int row = 0; row < SUDOKU_BOARD_SIZE; ++row, ++index)
 	{
-		const int checkingNum = checkArrayValid(board[row]);
-		if(checkingNum == NumOfNotValid)
+		const int checkingNum = checkArrayValid(board[row], UN_USING_VALUE, UN_USING_VALUE, false);
+		if(checkingNum == NUM_OF_NOT_VALID)
 		{
 			std::cout << "Error in row: " << row << std::endl;
 		}
@@ -63,14 +98,14 @@ void TestSudoku(char board[SudokuBoardSize][SudokuBoardSize])
 	}
 
 	//column check
-	for (int column = 0; column < SudokuBoardSize; ++column, ++index)
+	for (int column = 0; column < SUDOKU_BOARD_SIZE; ++column, ++index)
 	{
-		for(int i = 0; i < SudokuBoardSize; ++i)
+		for(int i = 0; i < SUDOKU_BOARD_SIZE; ++i)
 		{
 			singleArrayInSudoku[i] = board[i][column];
 		}
-		const int checkingNum = checkArrayValid(singleArrayInSudoku);
-		if (checkingNum == NumOfNotValid)
+		const int checkingNum = checkArrayValid(singleArrayInSudoku, UN_USING_VALUE, UN_USING_VALUE, false);
+		if (checkingNum == NUM_OF_NOT_VALID)
 		{
 			std::cout << "Error in row: " << column << std::endl;
 		}
@@ -78,35 +113,26 @@ void TestSudoku(char board[SudokuBoardSize][SudokuBoardSize])
 	}
 
 	//one small box check
-	for (int row = 0; row < SudokuBoardSize; row += 3)
+	for (int row = 0; row < SUDOKU_BOARD_SIZE; row += 3)
 	{
-		for(int column = 0; column < SudokuBoardSize; column += 3, ++index)
+		for(int column = 0; column < SUDOKU_BOARD_SIZE; column += 3, ++index)
 		{
 			for(int i = 0; i < 3; ++i)
 			{
 				for(int j = 0; j < 3; ++j)
 				{
-					singleArrayInSudoku[i * 3 + i] = board[row + i][column + j];
+					singleArrayInSudoku[i * 3 + j] = board[row + i][column + j];
 				}
 			}
-
-			//todo
 			
-			/*const int checkingNum = checkArrayValid(singleArrayInSudoku);
-			if (checkingNum == NumOfNotValid)
-			{
-				std::cout << "Error in 3x3 starting at index: ( " << row << ", " << column <<")" std::endl;
-			}
-			arrayCheckResult[index] = checkingNum;*/
-			
-			arrayCheckResult[index] = checkArrayValid(singleArrayInSudoku);
+			arrayCheckResult[index] = checkArrayValid(singleArrayInSudoku, row, column, true);
 		}
 	}
 
 	bool isUncompleted = false;
 	for(int i = 0; i < index; ++i)
 	{
-		if(arrayCheckResult[i] == NumOfNotCompleted)
+		if(arrayCheckResult[i] == NUM_OF_NOT_COMPLETED)
 		{
 			isUncompleted = true;
 		}
@@ -126,7 +152,7 @@ float BirthdayParadox()
 	return 0.0f;
 }
 
-QuickFind::QuickFind(int numNodes): size(numNodes)
+QuickFind::QuickFind(int numNodes): size(numNodes), data(nullptr)
 {
 	
 }
