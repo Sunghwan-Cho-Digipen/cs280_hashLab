@@ -54,7 +54,7 @@ int checkArrayValid(const char* singleArray, [[maybe_unused]]int row, [[maybe_un
 			{
 				if (is3X3Called == true)
 				{
-					std::cout << "Error in 3x3 starting at index: ( " << row << ", " << column << ")" << std::endl;
+					std::cout << "Error in 3x3 starting at index: (" << row << ", " << column << ")" << std::endl;
 				}
 				returnValue = NUM_OF_NOT_VALID;
 			}
@@ -107,7 +107,7 @@ void TestSudoku(char board[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE])
 		const int checkingNum = checkArrayValid(singleArrayInSudoku, UN_USING_VALUE, UN_USING_VALUE, false);
 		if (checkingNum == NUM_OF_NOT_VALID)
 		{
-			std::cout << "Error in row: " << column << std::endl;
+			std::cout << "Error in column: " << column << std::endl;
 		}
 		arrayCheckResult[index] = checkingNum;
 	}
@@ -132,6 +132,11 @@ void TestSudoku(char board[SUDOKU_BOARD_SIZE][SUDOKU_BOARD_SIZE])
 	bool isUncompleted = false;
 	for(int i = 0; i < index; ++i)
 	{
+		if(arrayCheckResult[i] == NUM_OF_NOT_VALID)
+		{
+			return;
+		}
+		
 		if(arrayCheckResult[i] == NUM_OF_NOT_COMPLETED)
 		{
 			isUncompleted = true;
@@ -154,25 +159,38 @@ float BirthdayParadox()
 
 QuickFind::QuickFind(int numNodes): size(numNodes), data(nullptr)
 {
-	
+	data = new int[numNodes];
+
+	for(int i = 0; i < size; ++i)
+	{
+		data[i] = i;
+	}
 }
 
 QuickFind::~QuickFind()
 {
-	
+	delete[] data;
+	data = nullptr;
 }
 
 void QuickFind::Union(int nodeA, int nodeB)
 {
-	
+	for(int i = 0; i < size; ++i)
+	{
+		if(IsConnected(nodeB, i) == true &&  nodeB != i)
+		{
+			data[i] = Hash(nodeA);
+		}
+	}
+	data[nodeB] = data[nodeA];
 }
 
 bool QuickFind::IsConnected(int nodeA, int nodeB)
 {
-	return false;
+	return data[nodeA] == data[nodeB];
 }
 
 int QuickFind::Hash(int nodeIndex)
 {
-	return 0;
+	return data[nodeIndex];
 }
